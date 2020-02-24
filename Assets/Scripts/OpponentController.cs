@@ -23,6 +23,6 @@ public class OpponentController : MonoBehaviour
       (player.transform.position - transform.position).normalized;
 
     // Lesson does not use Time.deltaTime - why?
-    opponentRb.AddForce(lookDirection * speed * Time.deltaTime);
+    opponentRb.AddForce(lookDirection * speed);
   }
 }

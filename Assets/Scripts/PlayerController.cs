@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
   [SerializeField] string moveAxis = "Vertical";
   [SerializeField] float speed = 10;
+  [SerializeField] bool hasPowerup = false;
 
   Rigidbody playerRb;
   GameObject focalPoint;
@@ -22,6 +23,24 @@ public class PlayerController : MonoBehaviour
   {
     var playerMovement = Input.GetAxis(moveAxis);
     playerRb.AddForce(
-      focalPoint.transform.forward * playerMovement * speed * Time.deltaTime);
+      focalPoint.transform.forward * playerMovement * speed);
+  }
+
+  void OnTriggerEnter(Collider other)
+  {
+    if (other.CompareTag("Powerup"))
+    {
+      hasPowerup = true;
+      Destroy(other.gameObject);
+    }
+  }
+
+  void OnCollisionEnter(Collision collision)
+  {
+    if (collision.gameObject.CompareTag("Opponent") && hasPowerup)
+    {
+      Debug.Log("Player collided with " + collision.gameObject.name
+        + " with hasPowerup set to " + hasPowerup);
+    }
   }
 }
